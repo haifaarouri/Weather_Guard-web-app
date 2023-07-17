@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://haifaarouri:ODyMnSUQ2xLyMiSn@cluster0.at8g4pe.mongodb.net/?retryWrites=true&w=majority
+      database: WeatherGuardDB
