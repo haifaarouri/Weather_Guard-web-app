@@ -3,6 +3,7 @@ import { useState } from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
+import './stylesidebar.css'
 
 // reactstrap components
 import {
@@ -95,8 +96,6 @@ const Sidebar = (props) => {
               alt={logo.imgAlt}
               className="navbar-brand-img"
               src={logo.imgSrc}
-              width="60%"
-              // height="200px"
             />
           </NavbarBrand>
         ) : null}

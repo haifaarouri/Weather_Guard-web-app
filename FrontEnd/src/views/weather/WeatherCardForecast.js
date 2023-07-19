@@ -4,15 +4,15 @@ const WeatherCardForecast = ({ data, toggle }) => {
 
     const [day2, setDay2] = useState([])
 
-    useEffect(() => {
-        if (data) {
-            for (let index = 0; index < data.list.length; index++) {
-                if (`${data.list[index].dt_txt[8]}` + `${data.list[index].dt_txt[9]}` !== `${data.list[index + 1].dt_txt[8]}` + `${data.list[index + 1].dt_txt[9]}`) {
-                    console.log(data.list[index].dt_txt[8]);
-                }
-            }
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (data) {
+    //         for (let index = 0; index < data.list.length; index++) {
+    //             if (`${data.list[index].dt_txt[8]}` + `${data.list[index].dt_txt[9]}` !== `${data.list[index + 1].dt_txt[8]}` + `${data.list[index + 1].dt_txt[9]}`) {
+    //                 console.log(data.list[index].dt_txt[8]);
+    //             }
+    //         }
+    //     }
+    // }, [])
 
     return (
         <>
@@ -39,7 +39,7 @@ const WeatherCardForecast = ({ data, toggle }) => {
                         textAlign: "center"
                     }}
                 >
-                    {data.list[0].dt_txt}
+                    {data.dt_txt}
                 </div>
                 <img
                     src="http://openweathermap.org/img/wn/10d@2x.png"
@@ -47,10 +47,10 @@ const WeatherCardForecast = ({ data, toggle }) => {
                     className="w-icon"
                 />
                 <div style={{ fontWeight: 100, fontSize: 12 }}>
-                    Min {data.list[0].main.temp_min.toFixed(0)} °C
+                    Min {data.main.temp_min.toFixed(0)} °C
                 </div>
                 <div style={{ fontWeight: 100, fontSize: 12 }}>
-                    Max {data.list[0].main.temp_max.toFixed(0)} °C
+                    Max {data.main.temp_max.toFixed(0)} °C
                 </div>
             </div>}
         </>

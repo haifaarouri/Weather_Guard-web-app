@@ -216,27 +216,32 @@ const Weather = () => {
 
     useEffect(() => {
         if (dataApi) {
-            console.log(dataApi);
+            // console.log(dataApi);
             const d0 = new Date(dataApi.list[0].dt_txt)
             let prevD = d0
+            let i = 0
             for (let index = 0; index < dataApi.list.length; index++) {
                 let d = new Date(dataApi.list[index].dt_txt)
-                if (index !== 0)
-                    prevD = new Date(dataApi.list[index - 1].dt_txt)
-                else
-                    setTab([{ day0: [dataApi.list[0]] }])
-                if (d.getFullYear() === prevD.getFullYear() && d.getDate() === prevD.getDate() && d.getMonth() === prevD.getMonth()) {
-                    console.log(tab[tab.length-1])
+                if (index !== 0) {
+                    prevD = new Date(dataApi.list[i].dt_txt)
+                }
+                else {
+                    setTab([{ day: [dataApi.list[0]] }])
+                }
+                if (d.getDate() === prevD.getDate()) {
+                    if (tab.length > 0)
+                        tab[tab.length - 1].day.push(dataApi.list[index])
                 } else {
+                    i = index
                     setTab((prevValue) => [
                         ...prevValue,
-                        { ['day' + index]: dataApi.list[index] }
+                        { 'day': [dataApi.list[index]] }
                     ])
                 }
 
             }
-            console.log(tab);
         }
+        console.log(tab);
     }, [dataApi])
 
     return (
@@ -412,7 +417,11 @@ const Weather = () => {
                                     </div>
                                 </div> */}
                                 <div style={{ display: "flex" }} id="weather-forecast">
-                                    {[1, 2, 3, 4, 5].map((e, i) => <WeatherCardForecast key={i} data={dataApi} toggle={toggle} />)}
+                                    {/* {[1, 2, 3, 4, 5].map((e, i) => <WeatherCardForecast key={i} data={dataApi} toggle={toggle} />)} */}
+                                    {tab.map((e, i) => <WeatherCardForecast key={i} data={e.day[0]} toggle={() => {
+                                        toggle()
+                                        
+                                    }} />)}
                                 </div>
                             </div>
                         </div>
