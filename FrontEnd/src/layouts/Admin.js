@@ -8,6 +8,10 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
+import Profile from "views/examples/Profile";
+import FavouriteDestinations from "views/examples/FavouriteDestinations";
+import Users from "admin/users";
+import Alerts from "admin/alerts";
 
 const Admin = (props) => {
   const mainContent = React.useRef(null);
@@ -61,7 +65,11 @@ const Admin = (props) => {
         />
         <Routes>
           {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/admin/weather" replace />} />
+          <Route path="/user-profile" element={<Profile />} />
+          <Route path="/destinations" element={<FavouriteDestinations />} />
+          <Route path="/dashboard" element={<Users />} />
+          <Route path="/admin-alerts" element={<Alerts />} />
+          {/* <Route path="*" element={<Navigate to="/admin/weather" replace />} /> */}
         </Routes>
         <Container fluid>
           <AdminFooter />

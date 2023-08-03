@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // reactstrap components
 import {
   UncontrolledCollapse,
@@ -13,6 +13,9 @@ import {
 } from "reactstrap";
 
 const AdminNavbar = () => {
+
+  const navigate = useNavigate()
+
   return (
     <>
       <Navbar className="navbar-top navbar-horizontal navbar-dark" expand="md">
@@ -55,7 +58,8 @@ const AdminNavbar = () => {
               <NavItem>
                 <NavLink
                   className="nav-link-icon"
-                  to="/auth/register"
+                  to="#"
+                  onClick={()=> navigate("/auth/register")}
                   tag={Link}
                 >
                   <i className="ni ni-circle-08" />

@@ -9,6 +9,7 @@ import {
     Table,
     Media,
 } from "reactstrap";
+import TempAlerts from './TempAlerts';
 
 const Alerts = () => {
 
@@ -34,6 +35,7 @@ const Alerts = () => {
             <div className="container-fluid" style={{ marginTop: "-13%", marginBottom: "5%" }}>
                 <div className="row mt-5">
                     <div className="col-xl-12">
+                        <TempAlerts />
                         <div className="card shadow" style={{ padding: "2%" }}>
                             <div className="d-flex justify-content-around">
                                 <div>

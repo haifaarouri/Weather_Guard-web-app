@@ -12,9 +12,20 @@ const GeoLocationModal = ({ modal, toggle, onDataReceived }) => {
 
     const [locationPermission, setLocationPermission] = useState(null);
 
-    const allow = () => setLocationPermission(true)
+    const allow = () => {
+        setLocationPermission(true)
 
-    const deny = () => setLocationPermission(false)
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                console.log("Latitude:", position.coords.latitude);
+                console.log("Longitude:", position.coords.longitude);
+                toggle()
+            },
+            (error) => {
+                setLocationPermission(false)
+            }
+        );
+    }
 
     const sendDataToParent = () => {
         let data = {}
@@ -50,16 +61,12 @@ const GeoLocationModal = ({ modal, toggle, onDataReceived }) => {
                                     Please allow geolocation for your browser to see weather information for your current location
                                 </CardHeader>
                                 <CardBody className='d-flex justify-content-center'>
-                                    <Button color="success" onClick={allow}>
+                                    <Button style={{ backgroundColor: '#f58733', color: 'white' }} className="btn" onClick={allow}>
                                         Allow
-                                    </Button>
-                                    <Button color="danger" onClick={deny}>
-                                        Deny
                                     </Button>
                                 </CardBody>
                                 <CardFooter>
-                                    {locationPermission && <Alert>GeoLocation is allowed now, we will display the weather info for your current position</Alert>}
-                                    {locationPermission === false && <Alert color="danger">GeoLocation is denied, we will display weather info of Ouagadougou capital of Burkina Faso</Alert>}
+                                    {locationPermission === false && <Alert style={{ color: "#f58733", backgroundColor: "white", borderColor: "#f58733" }}>GeoLocation is denied, we will display weather info of Ouagadougou capital of Burkina Faso</Alert>}
                                 </CardFooter>
                             </Card>
                         </div>

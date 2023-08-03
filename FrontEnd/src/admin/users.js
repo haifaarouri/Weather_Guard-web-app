@@ -1,250 +1,86 @@
 import React, { useState } from 'react';
 // reactstrap components
 import {
-    Badge,
-    Card,
-    CardHeader,
-    CardFooter,
-    DropdownMenu,
-    DropdownItem,
-    UncontrolledDropdown,
-    DropdownToggle,
-    Media,
-    Pagination,
-    PaginationItem,
-    PaginationLink,
-    Progress,
     Table,
-    Container,
-    Row,
-    UncontrolledTooltip,
-    Button,
+    Container
 } from "reactstrap";
 // core components
-import Header from "components/Headers/Header.js";
+import instance from 'services/api';
 import { useEffect } from 'react';
+import { RiDeleteBin5Line } from 'react-icons/ri';
 
 const Users = () => {
 
     const [usersList, setUsersList] = useState([])
 
     const fetchData = async () => {
-        const response = await fetch("http://localhost:8082/SpringMVC/user")
-        const data = await response.json()
-        console.log(data);
-        return data
+        if (localStorage.getItem("email")) {
+            const response = await instance.get("http://localhost:8082/SpringMVC/user")
+            // console.log(response.data);
+            return response.data
+        } else {
+            console.log("error");
+        }
     }
+
+    useEffect(async () => {
+        const data = async () => {
+            const d = await fetchData()
+            setUsersList(d)
+        }
+        data()
+    }, [])
 
     return (
         <>
-            <Header />
-            {/* Page content */}
-            <Button onClick={fetchData}>click</Button>
-            <Container className="mt--7" fluid>
-                {/* Table */}
-                <Row>
-                    <div className="col">
-                        <Card className="shadow">
-                            <CardHeader className="border-0">
-                                <h3 className="mb-0">Card tables</h3>
-                            </CardHeader>
-                            <Table className="align-items-center table-flush" responsive>
-                                <thead className="thead-light">
-                                    <tr>
-                                        <th scope="col">Project</th>
-                                        <th scope="col">Budget</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Users</th>
-                                        <th scope="col">Completion</th>
-                                        <th scope="col" />
+            <div className="header pb-8 pt-5 pt-md-8" style={{ background: "linear-gradient(87deg, #11cdef 0, #00264d 100%)" }}>
+                <Container style={{ marginTop: "-2%" }}>
+                    <div className="header-body">
+                        <h1>List of Users</h1>
+                        <Table className="align-items-center table-flush" responsive>
+                            <thead className="thead-light">
+                                <tr style={{ textAlign: "center" }}>
+                                    <th scope="col">Fisrt Name</th>
+                                    <th scope="col">Last Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Gender</th>
+                                    <th scope="col">Profile Picture</th>
+                                    <th scope="col">Role</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody style={{ backgroundColor: "white" }}>
+                                {usersList.length > 0 && usersList.map((u, i) => {
+                                    return <tr key={i}>
+                                        <td style={{ textAlign: "center", fontWeight: "bold" }}>
+                                            {u.firstName}
+                                        </td>
+                                        <td style={{ textAlign: "center" }}>
+                                            {u.lastName}
+                                        </td>
+                                        <td style={{ textAlign: "center" }}>
+                                            {u.email}
+                                        </td>
+                                        <td style={{ textAlign: "center" }}>
+                                            {u.gender}
+                                        </td>
+                                        <td style={{ textAlign: "center" }}>
+                                            {u.profilePicture}
+                                        </td>
+                                        <td style={{ textAlign: "center" }}>
+                                            {u.role}
+                                        </td>
+                                        <td style={{ textAlign: "center" }}>
+                                            <RiDeleteBin5Line size={20} color="red"/>
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    {usersList.length > 0 && usersList.map((u, i) =>
-                                        <tr key={i}>
-                                            <th scope="row">
-                                                <Media className="align-items-center">
-                                                    <a
-                                                        className="avatar rounded-circle mr-3"
-                                                        href="#pablo"
-                                                        onClick={(e) => e.preventDefault()}
-                                                    >
-                                                    </a>
-                                                    <Media>
-                                                        <span className="mb-0 text-sm">
-                                                            u._id
-                                                        </span>
-                                                    </Media>
-                                                </Media>
-                                            </th>
-                                            <td>$2,500 USD</td>
-                                            <td>
-                                                <Badge color="" className="badge-dot mr-4">
-                                                    <i className="bg-warning" />
-                                                    pending
-                                                </Badge>
-                                            </td>
-                                            <td>
-                                                <div className="avatar-group">
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip742438047"
-                                                        onClick={(e) => e.preventDefault()}
-                                                    >
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip742438047"
-                                                    >
-                                                        Ryan Tompson
-                                                    </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip941738690"
-                                                        onClick={(e) => e.preventDefault()}
-                                                    >
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip941738690"
-                                                    >
-                                                        Romina Hadid
-                                                    </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip804044742"
-                                                        onClick={(e) => e.preventDefault()}
-                                                    >
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip804044742"
-                                                    >
-                                                        Alexander Smith
-                                                    </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip996637554"
-                                                        onClick={(e) => e.preventDefault()}
-                                                    >
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip996637554"
-                                                    >
-                                                        Jessica Doe
-                                                    </UncontrolledTooltip>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <span className="mr-2">60%</span>
-                                                    <div>
-                                                        <Progress
-                                                            max="100"
-                                                            value="60"
-                                                            barClassName="bg-danger"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="text-right">
-                                                <UncontrolledDropdown>
-                                                    <DropdownToggle
-                                                        className="btn-icon-only text-light"
-                                                        href="#pablo"
-                                                        role="button"
-                                                        size="sm"
-                                                        color=""
-                                                        onClick={(e) => e.preventDefault()}
-                                                    >
-                                                        <i className="fas fa-ellipsis-v" />
-                                                    </DropdownToggle>
-                                                    <DropdownMenu className="dropdown-menu-arrow" right>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={(e) => e.preventDefault()}
-                                                        >
-                                                            Action
-                                                        </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={(e) => e.preventDefault()}
-                                                        >
-                                                            Another action
-                                                        </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={(e) => e.preventDefault()}
-                                                        >
-                                                            Something else here
-                                                        </DropdownItem>
-                                                    </DropdownMenu>
-                                                </UncontrolledDropdown>
-                                            </td>
-                                        </tr>)}
-                                </tbody>
-                            </Table>
-                            <CardFooter className="py-4">
-                                <nav aria-label="...">
-                                    <Pagination
-                                        className="pagination justify-content-end mb-0"
-                                        listClassName="justify-content-end mb-0"
-                                    >
-                                        <PaginationItem className="disabled">
-                                            <PaginationLink
-                                                href="#pablo"
-                                                onClick={(e) => e.preventDefault()}
-                                                tabIndex="-1"
-                                            >
-                                                <i className="fas fa-angle-left" />
-                                                <span className="sr-only">Previous</span>
-                                            </PaginationLink>
-                                        </PaginationItem>
-                                        <PaginationItem className="active">
-                                            <PaginationLink
-                                                href="#pablo"
-                                                onClick={(e) => e.preventDefault()}
-                                            >
-                                                1
-                                            </PaginationLink>
-                                        </PaginationItem>
-                                        <PaginationItem>
-                                            <PaginationLink
-                                                href="#pablo"
-                                                onClick={(e) => e.preventDefault()}
-                                            >
-                                                2 <span className="sr-only">(current)</span>
-                                            </PaginationLink>
-                                        </PaginationItem>
-                                        <PaginationItem>
-                                            <PaginationLink
-                                                href="#pablo"
-                                                onClick={(e) => e.preventDefault()}
-                                            >
-                                                3
-                                            </PaginationLink>
-                                        </PaginationItem>
-                                        <PaginationItem>
-                                            <PaginationLink
-                                                href="#pablo"
-                                                onClick={(e) => e.preventDefault()}
-                                            >
-                                                <i className="fas fa-angle-right" />
-                                                <span className="sr-only">Next</span>
-                                            </PaginationLink>
-                                        </PaginationItem>
-                                    </Pagination>
-                                </nav>
-                            </CardFooter>
-                        </Card>
+                                }
+                                )}
+                            </tbody>
+                        </Table>
                     </div>
-                </Row>
-            </Container>
+                </Container>
+            </div>
         </>
     );
 };

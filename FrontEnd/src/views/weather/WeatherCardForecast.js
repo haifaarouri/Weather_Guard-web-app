@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
-const WeatherCardForecast = ({ data, toggle }) => {
+const WeatherCardForecast = ({ data, toggle, currentDay }) => {
 
-    const [day2, setDay2] = useState([])
+    const [day, setDay] = useState(null)
 
-    // useEffect(() => {
-    //     if (data) {
-    //         for (let index = 0; index < data.list.length; index++) {
-    //             if (`${data.list[index].dt_txt[8]}` + `${data.list[index].dt_txt[9]}` !== `${data.list[index + 1].dt_txt[8]}` + `${data.list[index + 1].dt_txt[9]}`) {
-    //                 console.log(data.list[index].dt_txt[8]);
-    //             }
-    //         }
-    //     }
-    // }, [])
+    useEffect(() => {
+        setDay(data.dt_txt.slice(0, 10))
+    }, [])
 
     return (
         <>
-            {data && <div
+            {data && day && <div
                 style={{
                     display: "flex",
                     flexDirection: "column",
@@ -29,7 +23,10 @@ const WeatherCardForecast = ({ data, toggle }) => {
                     background: "linear-gradient(87deg, #11cdef 0, #00264d 100%)",
                     cursor: "pointer"
                 }}
-                onClick={toggle}
+                onClick={() => {
+                    toggle()
+                    currentDay(day)
+                }}
             >
                 <div
                     style={{
@@ -39,7 +36,7 @@ const WeatherCardForecast = ({ data, toggle }) => {
                         textAlign: "center"
                     }}
                 >
-                    {data.dt_txt}
+                    {day}
                 </div>
                 <img
                     src="http://openweathermap.org/img/wn/10d@2x.png"

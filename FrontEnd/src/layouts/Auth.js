@@ -1,34 +1,32 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
-import { useLocation, Route, Routes, Navigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 // reactstrap components
 import { Container, Row, Col } from "reactstrap";
 
 // core components
-import AuthNavbar from "components/Navbars/AuthNavbar.js";
+// import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
-import routes from "routes.js";
+// import routes from "routes.js";
+import Login from "views/examples/Login";
+import Register from "views/examples/Register";
+import { useState } from "react";
 
 const Auth = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
+  const [url,] = useState(window.location.pathname)
+  // const [token, setToken] = useState("")
+
+  const setToken = (userToken) => {
+    sessionStorage.setItem('toekn', JSON.stringify(userToken))
+  }
+
+  const getToken = () => {
+
+  }
+
+  const token = getToken()
 
   React.useEffect(() => {
     document.body.classList.add("bg-default");
@@ -42,32 +40,31 @@ const Auth = (props) => {
     mainContent.current.scrollTop = 0;
   }, [location]);
 
-  const getRoutes = (routes) => {
-    return routes.map((prop, key) => {
-      if (prop.layout === "/auth") {
-        return (
-          <Route path={prop.path} element={prop.component} key={key} exact />
-        );
-      } else {
-        return null;
-      }
-    });
-  };
+  // const getRoutes = (routes) => {
+  //   return routes.map((prop, key) => {
+  //     if (prop.layout === "/auth") {
+  //       return (
+  //         <Route path={prop.path} element={prop.component} key={key} exact />
+  //       );
+  //     } else {
+  //       return null;
+  //     }
+  //   });
+  // }
 
   return (
     <>
       <div className="main-content" ref={mainContent}>
-        <AuthNavbar />
-        <div className="header bg-gradient-info py-7 py-lg-8">
+        {/* <AuthNavbar /> */}
+        <div className="header py-7 py-lg-8" style={{ background: "linear-gradient(87deg, #11cdef 0, #00264d 100%)", color: "#00264d" }}>
           <Container>
             <div className="header-body text-center mb-7">
               <Row className="justify-content-center">
                 <Col lg="5" md="6">
-                  <h1 className="text-white">Welcome!</h1>
-                  <p className="text-lead text-light">
-                    Use these awesome forms to login or create new account in
-                    your project for free.
-                  </p>
+                  <h1 style={{color: "#00264d"}}>Welcome to <img src={require("../assets/img/brand/WeatherGuardLogo.png")} width="30%" alt="logo" style={{ marginBottom: "12%" }} /> !</h1>
+                  {url === "/auth/register" && <p className="text-lead text-light">
+                    Please register to our web application, so you use more features.
+                  </p>}
                 </Col>
               </Row>
             </div>
@@ -91,10 +88,12 @@ const Auth = (props) => {
         {/* Page content */}
         <Container className="mt--8 pb-5">
           <Row className="justify-content-center">
-            <Routes>
+            {/* <Routes>
               {getRoutes(routes)}
               <Route path="*" element={<Navigate to="/auth/login" replace />} />
-            </Routes>
+            </Routes> */}
+            {url === "/auth/register" && <Register />}
+            {!token && url === "/auth/login" && <Login setToken={setToken} />}
           </Row>
         </Container>
       </div>
