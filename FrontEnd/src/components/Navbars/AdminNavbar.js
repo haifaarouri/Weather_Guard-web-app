@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 // reactstrap components
 import {
@@ -18,8 +20,21 @@ import {
   NavLink,
   NavItem,
 } from "reactstrap";
+import { getUserByEmail } from "services/userService";
 
 const AdminNavbar = (props) => {
+
+  const [userName, setUserName] = useState()
+
+  useEffect(() => {
+    let e = localStorage.getItem("email")
+    const u = async () => {
+      let user = await getUserByEmail(e)
+      setUserName(user.firstName+" "+user.lastName)
+    }
+    u()
+  }, [])
+
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -86,12 +101,12 @@ const AdminNavbar = (props) => {
                   <span className="avatar avatar-sm rounded-circle">
                     <img
                       alt="..."
-                      src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                      src={require("../../assets/img/userImg/haifa2.jpeg")}
                     />
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Haifa Arouri
+                      {userName}
                     </span>
                   </Media>
                 </Media>

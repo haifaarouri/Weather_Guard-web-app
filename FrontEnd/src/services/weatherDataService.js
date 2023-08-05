@@ -4,14 +4,6 @@ export const getWeatherData = async (id) => {
     return json
 }
 
-// export const deleteSportType = async (id) => {
-//     const res = await fetch(`${process.env.backurl}/api/sportTypes/${id}`, {
-//         method: 'DELETE'
-//     })
-//     const data = await res.json()
-//     return data
-// }
-
 export const postWeatherData = async (data) => {
     
     console.log(data);

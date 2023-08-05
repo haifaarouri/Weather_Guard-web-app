@@ -21,3 +21,9 @@ export const postUser = async (data) => {
     console.log(result);
     return result
 }
+
+export const getUserByEmail = async (email) => {
+    const res = await fetch(`http://localhost:8082/SpringMVC/user/email/${email}`)
+    const data = await res.json()
+    return data
+}

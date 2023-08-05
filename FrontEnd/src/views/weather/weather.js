@@ -20,9 +20,12 @@ import {
     DropdownItem
 } from "reactstrap";
 import WeatherCardForecast from './WeatherCardForecast';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import classnames from 'classnames';
 import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md"
+import { getUserByEmail } from 'services/userService';
+import { postLocation } from 'services/locationService';
+import { RxStar, RxStarFilled } from "react-icons/rx"
 
 const Weather = () => {
 
@@ -325,6 +328,18 @@ const Weather = () => {
         }
     }
 
+    const navigate = useNavigate()
+    const saveDestination = async () => {
+        if (localStorage.getItem("role")) {
+            let e = localStorage.getItem("email")
+            let user = await getUserByEmail(e)
+            navigate("/admin/destinations")
+            if (dataApi && user) {
+                await postLocation(dataApi.city, user._id)
+            }
+        }
+    }
+
     return (
         <>
             <div className="header pb-8 pt-5 pt-md-8" style={{ background: "linear-gradient(87deg, #11cdef 0, #00264d 100%)" }}>
@@ -341,20 +356,20 @@ const Weather = () => {
                                                     {dataApi.city.name}
                                                     <UncontrolledDropdown nav>
                                                         <DropdownToggle nav className="nav-link-icon">
-                                                            {/* <MdOutlineFavoriteBorder size={20} style={{ marginLeft: "5%" }} /> */}
-                                                            <MdOutlineFavorite size={20} style={{ marginLeft: "5%" }} />
+                                                            {/* <RxStarFilled size={20} style={{ marginLeft: "5%" }}/> */}
+                                                            <RxStar size={20} style={{ marginLeft: "5%" }}/>
                                                         </DropdownToggle>
                                                         <DropdownMenu
                                                             aria-labelledby="navbar-default_dropdown_1"
                                                             className="dropdown-menu-arrow"
                                                             right
                                                         >
-                                                            <DropdownItem><MdOutlineFavoriteBorder size={20} />Save to "My destinations"</DropdownItem>
+                                                            <DropdownItem onClick={saveDestination}><RxStarFilled size={20} color='#f58733'/>Save to "My destinations"</DropdownItem>
                                                             <DropdownItem divider />
                                                             <DropdownItem>{dataApi.city.name}, {dataApi.city.country}</DropdownItem>
                                                             <DropdownItem>Latitude {dataApi.city.coord.lat}, Longitude {dataApi.city.coord.lon}</DropdownItem>
                                                             <DropdownItem divider />
-                                                            <DropdownItem>
+                                                            {!localStorage.getItem("role") && <DropdownItem>
                                                                 <Button style={{ backgroundColor: "#00264d" }}>
                                                                     <a href="/auth/login" style={{ color: "white" }}>
                                                                         <i className="ni ni-circle-08" />
@@ -367,7 +382,7 @@ const Weather = () => {
                                                                         <span className="nav-link-inner--text">Login</span>
                                                                     </a>
                                                                 </Button>
-                                                            </DropdownItem>
+                                                            </DropdownItem>}
                                                         </DropdownMenu>
                                                     </UncontrolledDropdown>
                                                 </div>

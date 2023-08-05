@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.esprit.persistance.entities.Location;
+import tn.esprit.persistance.entities.User;
 import tn.esprit.service.interfaces.LocationService;
 
 @RestController
@@ -24,9 +25,9 @@ public class LocationController {
 	@Autowired
 	private LocationService locSer;
 	
-	@PostMapping(value="/saveLocation")
-	public Location addLocation(@RequestBody Location u) {
-		return locSer.addLocation(u);
+	@PostMapping(value="/saveLocation/{id}")
+	public Location addLocation(@RequestBody Location u, @PathVariable String id) {
+		return locSer.addLocation(u, id);
 	}
 	
 	@GetMapping
@@ -49,4 +50,8 @@ public class LocationController {
 		return locSer.deleteLocation(locId);
 	}
 
+	@PostMapping(value="/user-locations")
+	public List<Location> getUserLocations(@RequestBody User u ) {
+		return locSer.getLocationByUser(u);
+	}
 }

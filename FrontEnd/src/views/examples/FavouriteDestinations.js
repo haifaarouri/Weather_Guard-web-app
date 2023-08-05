@@ -1,8 +1,30 @@
 import UserHeader from "components/Headers/UserHeader.js";
 import { Card, CardHeader, Table } from "reactstrap";
 import { RiDeleteBin5Line } from "react-icons/ri"
+import { RxStarFilled } from "react-icons/rx";
+import { getUserLocations } from "services/locationService";
+import { getUserByEmail } from "services/userService";
+import { useEffect, useState } from "react";
 
 const FavouriteDestinations = () => {
+
+    const [list, setList] = useState([])
+
+    const getDestinations = async () => {
+        let e = localStorage.getItem("email")
+        let user = await getUserByEmail(e)
+        const res = await getUserLocations(user)
+        return res
+    }
+
+    useEffect(() => {
+        const des = async () => {
+            let d = await getDestinations()
+            setList(d)
+        }
+        des()
+    }, [])
+
     return (
         <>
             <UserHeader />
@@ -24,10 +46,10 @@ const FavouriteDestinations = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {[1, 2, 3].map((e, i) =>
+                        {list.length>0 && list.map((e, i) =>
                             <tr key={i}>
                                 <td style={{ textAlign: "center", fontWeight: "bold" }}>
-                                    Ouagadougou
+                                    Ouagadougou <RxStarFilled size={20} style={{ marginLeft: "5%" }} color='#f58733' />
                                 </td>
                                 <td style={{ textAlign: "center" }}>
                                     <svg
@@ -90,7 +112,7 @@ const FavouriteDestinations = () => {
                                     </svg> 29 °C
                                 </td>
                                 <td>
-                                    <RiDeleteBin5Line size={20} color="red"/>
+                                    <RiDeleteBin5Line size={20} color="red" />
                                 </td>
                             </tr>
                         )}

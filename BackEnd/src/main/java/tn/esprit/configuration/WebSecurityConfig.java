@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 			http.cors();
 			http.csrf().disable();
 			http.authorizeRequests()
-			.antMatchers("/location/**").fullyAuthenticated()
+			//.antMatchers("/location/**").fullyAuthenticated()
 		  	.antMatchers("**").permitAll()
 		  	.and().httpBasic(); 
 		} catch (Exception e) {
