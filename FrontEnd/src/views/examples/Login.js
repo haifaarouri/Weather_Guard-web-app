@@ -29,9 +29,11 @@ const Login = () => {
       localStorage.setItem("email", email)
       localStorage.setItem("password", password)
       if (res.data === "simpleUser") {
-        navigate("/admin/weather")
+        // navigate("/admin/weather")
+        window.location.assign("/admin/weather");
       } else if (res.data === "admin") {
-        navigate("/admin/dashboard")
+        // navigate("/admin/dashboard")
+        window.location.assign("/admin/dashboard");
       }
     }
     return res.data

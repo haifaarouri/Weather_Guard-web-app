@@ -26,10 +26,12 @@ import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md"
 import { getUserByEmail } from 'services/userService';
 import { postLocation } from 'services/locationService';
 import { RxStar, RxStarFilled } from "react-icons/rx"
+import MoreInformation from 'layouts/MoreInformation';
 
 const Weather = () => {
 
     const [modal, setModal] = useState(false);
+    const [modalMoreInfo, setModalMoreInfo] = useState(false);
     const [dataApi, setDataApi] = useState(null);
     const [latitude, setLatitude] = useState(null);
     const [longitude, setLongitude] = useState(null);
@@ -45,6 +47,7 @@ const Weather = () => {
     const { lat, lon } = useQueryParams();
 
     const toggle = () => setModal(!modal);
+    const toggleMoreInfo = () => setModalMoreInfo(!modalMoreInfo);
 
     const toggleLocationModal = () => setShowModal(!showModal);
 
@@ -289,9 +292,9 @@ const Weather = () => {
                         { 'day': [dataApi.list[index]] }
                     ])
                 }
-
             }
         }
+        console.log(dataApi);
     }, [dataApi])
 
     useEffect(() => {
@@ -357,14 +360,14 @@ const Weather = () => {
                                                     <UncontrolledDropdown nav>
                                                         <DropdownToggle nav className="nav-link-icon">
                                                             {/* <RxStarFilled size={20} style={{ marginLeft: "5%" }}/> */}
-                                                            <RxStar size={20} style={{ marginLeft: "5%" }}/>
+                                                            <RxStar size={20} style={{ marginLeft: "5%" }} />
                                                         </DropdownToggle>
                                                         <DropdownMenu
                                                             aria-labelledby="navbar-default_dropdown_1"
                                                             className="dropdown-menu-arrow"
                                                             right
                                                         >
-                                                            <DropdownItem onClick={saveDestination}><RxStarFilled size={20} color='#f58733'/>Save to "My destinations"</DropdownItem>
+                                                            <DropdownItem onClick={saveDestination}><RxStarFilled size={20} color='#f58733' />Save to "My destinations"</DropdownItem>
                                                             <DropdownItem divider />
                                                             <DropdownItem>{dataApi.city.name}, {dataApi.city.country}</DropdownItem>
                                                             <DropdownItem>Latitude {dataApi.city.coord.lat}, Longitude {dataApi.city.coord.lon}</DropdownItem>
@@ -476,12 +479,13 @@ const Weather = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <Button onClick={toggle} style={{ marginLeft: '33%', backgroundColor: '#f58733', color: 'white' }} className="btn">More information</Button>
+                                        <Button onClick={toggleMoreInfo} style={{ marginLeft: '33%', backgroundColor: '#f58733', color: 'white' }} className="btn">More information</Button>
                                     </CardBody>
                                 </Card>}
                             </Col>
                         </Row>
                         <CustomModal allDays={tab} day={day} weatherData={dataApi} modal={modal} toggle={toggle} />
+                        {dataApi && <MoreInformation day={dataApi.list[0].dt_txt} weatherData={dataApi} modal={modalMoreInfo} toggle={toggleMoreInfo} />}
                     </div>
                 </Container >
             </div >
@@ -509,7 +513,7 @@ const Weather = () => {
                                     cursor: "pointer"
                                 }}
                             >
-                                {dataApi && <div
+                                {/* {dataApi && <div
                                     style={{
                                         display: "flex",
                                         alignItems: "center",
@@ -546,7 +550,7 @@ const Weather = () => {
                                             Max {dataApi.list[0].main.temp_max.toFixed(0)} °C
                                         </div>
                                     </div>
-                                </div>}
+                                </div>} */}
                                 <div style={{ display: "flex" }} id="weather-forecast">
                                     {tab.map((e, i) => <WeatherCardForecast currentDay={handleDayReceived} key={i} data={e.day[0]} toggle={() => {
                                         toggle()

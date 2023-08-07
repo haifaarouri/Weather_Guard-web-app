@@ -11,16 +11,14 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 
 const Users = () => {
 
-    const [usersList, setUsersList] = useState([])
+    const [usersList, setUsersList] = useState(null)
 
     const fetchData = async () => {
-        if (localStorage.getItem("email")) {
-            const response = await instance.get("http://localhost:8082/SpringMVC/user")
-            // console.log(response.data);
-            return response.data
-        } else {
-            console.log("error");
-        }
+
+        const response = await instance.get("http://localhost:8082/SpringMVC/user")
+        // console.log(response.data);
+        return response.data
+
     }
 
     useEffect(async () => {
@@ -28,7 +26,11 @@ const Users = () => {
             const d = await fetchData()
             setUsersList(d)
         }
-        data()
+        if (localStorage.getItem("email")) {
+            data()
+        } else {
+            console.log("error");
+        }
     }, [])
 
     return (
@@ -50,7 +52,7 @@ const Users = () => {
                                 </tr>
                             </thead>
                             <tbody style={{ backgroundColor: "white" }}>
-                                {usersList.length > 0 && usersList.map((u, i) => {
+                                {usersList && usersList.map((u, i) => {
                                     return <tr key={i}>
                                         <td style={{ textAlign: "center", fontWeight: "bold" }}>
                                             {u.firstName}
@@ -71,7 +73,7 @@ const Users = () => {
                                             {u.role}
                                         </td>
                                         <td style={{ textAlign: "center" }}>
-                                            <RiDeleteBin5Line size={20} color="red"/>
+                                            <RiDeleteBin5Line size={20} color="red" />
                                         </td>
                                     </tr>
                                 }

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // reactstrap components
 import {
   DropdownMenu,
@@ -25,12 +25,13 @@ import { getUserByEmail } from "services/userService";
 const AdminNavbar = (props) => {
 
   const [userName, setUserName] = useState()
+  const navigate = useNavigate()
 
   useEffect(() => {
     let e = localStorage.getItem("email")
     const u = async () => {
       let user = await getUserByEmail(e)
-      setUserName(user.firstName+" "+user.lastName)
+      setUserName(user.firstName + " " + user.lastName)
     }
     u()
   }, [])
@@ -127,6 +128,7 @@ const AdminNavbar = (props) => {
                 <DropdownItem href="#" onClick={(e) => {
                   e.preventDefault()
                   localStorage.clear()
+                  window.location.assign("/");
                 }}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>

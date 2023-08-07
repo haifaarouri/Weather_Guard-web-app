@@ -19,11 +19,11 @@ const Auth = (props) => {
   // const [token, setToken] = useState("")
 
   const setToken = (userToken) => {
-    sessionStorage.setItem('toekn', JSON.stringify(userToken))
+    localStorage.setItem('token', JSON.stringify(userToken))
   }
 
   const getToken = () => {
-
+    localStorage.getItem('token')
   }
 
   const token = getToken()
