@@ -140,7 +140,7 @@ console.log(dataList);
     const getWeatherIcon = async () => {
         let d = []
         for (let index = 0; index < regionCenter.length; index++) {
-            const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${regionCenter[index].lat}&lon=${regionCenter[index].lng}&appid=ff0a7f12e23465a0a0ff9fc0f2e642d7&units=metric`);
+            const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${regionCenter[index].lat}&lon=${regionCenter[index].lng}&appid=${process.env.REACT_APP_openWeatherMapAPIKey}&units=metric`);
             const data = await response.json()
             d.push(data)
         }
@@ -171,35 +171,35 @@ console.log(dataList);
 
                 <LayersControl.BaseLayer name="TempMap">
                     <TileLayer
-                        url={`https://tile.openweathermap.org/map/${tileLayers[0]}/{z}/{x}/{y}.png?appid=ff0a7f12e23465a0a0ff9fc0f2e642d7`}
+                        url={`https://tile.openweathermap.org/map/${tileLayers[0]}/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_openWeatherMapAPIKey}`}
                         attribution='&copy; <a href="https://www.opentopomap.org">OpenTopoMap</a> contributors'
                     />
                 </LayersControl.BaseLayer>
 
                 <LayersControl.BaseLayer name="PrecipMap">
                     <TileLayer
-                        url={`https://tile.openweathermap.org/map/${tileLayers[1]}/{z}/{x}/{y}.png?appid=ff0a7f12e23465a0a0ff9fc0f2e642d7`}
+                        url={`https://tile.openweathermap.org/map/${tileLayers[1]}/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_openWeatherMapAPIKey}`}
                         attribution='&copy; <a href="https://www.opentopomap.org">OpenTopoMap</a> contributors'
                     />
                 </LayersControl.BaseLayer>
 
                 <LayersControl.BaseLayer name="WindMap">
                     <TileLayer
-                        url={`https://tile.openweathermap.org/map/${tileLayers[2]}/{z}/{x}/{y}.png?appid=ff0a7f12e23465a0a0ff9fc0f2e642d7`}
+                        url={`https://tile.openweathermap.org/map/${tileLayers[2]}/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_openWeatherMapAPIKey}`}
                         attribution='&copy; <a href="https://www.opentopomap.org">OpenTopoMap</a> contributors'
                     />
                 </LayersControl.BaseLayer>
 
                 <LayersControl.BaseLayer name="PressureMap">
                     <TileLayer
-                        url={`https://tile.openweathermap.org/map/${tileLayers[3]}/{z}/{x}/{y}.png?appid=ff0a7f12e23465a0a0ff9fc0f2e642d7`}
+                        url={`https://tile.openweathermap.org/map/${tileLayers[3]}/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_openWeatherMapAPIKey}`}
                         attribution='&copy; <a href="https://www.opentopomap.org">OpenTopoMap</a> contributors'
                     />
                 </LayersControl.BaseLayer>
 
                 <LayersControl.BaseLayer name="CloudMap">
                     <TileLayer
-                        url={`https://tile.openweathermap.org/map/${tileLayers[4]}/{z}/{x}/{y}.png?appid=ff0a7f12e23465a0a0ff9fc0f2e642d7`}
+                        url={`https://tile.openweathermap.org/map/${tileLayers[4]}/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_openWeatherMapAPIKey}`}
                         attribution='&copy; <a href="https://www.opentopomap.org">OpenTopoMap</a> contributors'
                     />
                 </LayersControl.BaseLayer>

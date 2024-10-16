@@ -39,11 +39,11 @@ const TempAlerts = () => {
     const fetchData = async (long, lat) => {
         try {
             if (long && lat) {
-                const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=ff0a7f12e23465a0a0ff9fc0f2e642d7&units=metric`);
+                const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${process.env.REACT_APP_openWeatherMapAPIKey}&units=metric`);
                 const data = await response.json()
                 setDataApi(data)
             } else {
-                const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=12.3686&lon=-1.5275&appid=ff0a7f12e23465a0a0ff9fc0f2e642d7&units=metric`);
+                const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=12.3686&lon=-1.5275&appid=${process.env.REACT_APP_openWeatherMapAPIKey}&units=metric`);
                 const data = await response.json()
                 setDataApi(data)
             }
